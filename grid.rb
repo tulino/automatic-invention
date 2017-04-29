@@ -23,7 +23,8 @@ class Grid
 
   def configure_cells
     each_cell do |cell|
-      row, col = cell.row, cell.column
+      row = cell.row
+      col = cell.column
 
       cell.north = self[row - 1, col]
       cell.south = self[row + 1, col]
@@ -38,28 +39,28 @@ class Grid
     @grid[row][column]
   end
 
-  def random_cell                       
+  def random_cell
     row = rand(@rows)
     column = rand(@grid[row].count)
-      self[row, column]
+    self[row, column]
   end
-                                /     +---+---+---+ random_cell de örnk:(3x3) row 3 ise 3 satırdan her hangi bir row secilip  random hucre seçimi
-                                      |   |   |   |
-                                      +---+---+---+
-                                      |   |   |   |
-                                      +---+---+---+
-                                      |   |   |   |
-                                      +---+---+---+ */
+                          #            +---+---+---+ random_cell de örnk:(3x3) row 3 ise 3 satırdan her hangi bir row secilip  random hucre seçimi
+                          #            |   |   |   |
+                          #            +---+---+---+
+                          #            |   |   |   |
+                          #            +---+---+---+
+                          #            |   |   |   |
+                          #            +---+---+---+
 
   def size
     @rows * @columns
   end
-      def each_row                             
-        @grid.each do |row|                      
-          yield row
-    end
-  end
 
+  def each_row
+      @grid.each do |row|
+      yield row
+      end
+  end
 
   def each_cell
     each_row do |row|
@@ -68,32 +69,29 @@ class Grid
       end
     end
   end
-
   def to_s
-    output = "+" + "---+" * columns + "\n"    #columns 3 geldiğini kabul edersek  "+---+---+---+"
+    output = '+' + '---+' * columns + "\n"    #columns 3 geldiğini kabul edersek  "+---+---+---+"
 
-    each_row do |row| 
-      top = "|"          #ust için
-      bottom = "+"      #alt için
-
-      row.each do |cell| 
-        cell = Cell.new(-1, -1) unless cell 
-
-        body = "   " 
-        east_boundary = (cell.linked?(cell.east) ? " " : "|") #hucre duvarı örme
+    each_row do |row|
+      top = '|'          #ust icin
+      bottom = '+'      #alt icin
+      row.each do |cell|
+        cell = Cell.new(-1, -1) unless cell
+        body = '   '
+        east_boundary = (cell.linked?(cell.east) ? ' ' : '|') #hucre duvarı örme
         top << body << east_boundary
 
-      
-        south_boundary = (cell.linked?(cell.south) ? "   " : "---") 
-        corner = "+"
+
+        south_boundary = (cell.linked?(cell.south) ? '   ' : '---')
+        corner = '+'
         bottom << south_boundary << corner
       end
 
       output << top << "\n"
       output << bottom << "\n"
     end
-    output 
+    output
   end
 end
-grid = Grid.new(5,5)
+grid = Grid.new(5 , 5)
 puts grid
