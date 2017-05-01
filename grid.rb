@@ -93,5 +93,3 @@ class Grid
     output
   end
 end
-grid = Grid.new(5 , 5)
-puts grid
